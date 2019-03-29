@@ -1,0 +1,126 @@
+<%-- 
+    Document   : Login
+    Created on : 19 Feb, 2019, 2:15:05 PM
+    Author     : User
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<%@page import="java.sql.*"%>
+<jsp:useBean class="DB.ConnectionClass" id="obj"></jsp:useBean>
+
+    <html>
+        <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <title>Login Details</title>
+        </head>
+        <body>
+
+        <%
+            String uname = "";
+            String pswrd = "";
+            String msg = "";
+
+            uname = request.getParameter("txtUname");
+            pswrd = request.getParameter("txtPswrd");
+            if (request.getParameter("btnSubmit") != null) {
+
+                String ins = "select * from tbl_userreg where user_uname='" + uname + "' and user_pswrd='" + pswrd + "' and user_regstatus='1'";
+                ResultSet rs = obj.selectCommand(ins);
+
+                if (rs.next()) {
+                    msg = "Record Saved...";
+                    session.setAttribute("id", rs.getString("user_id"));
+                    response.sendRedirect("../User/HomePage.jsp");
+                } else {
+
+                    String ins1 = "select * from tbl_techreg where tech_uname='" + uname + "' and tech_pswrd='" + pswrd + "' and tech_regstatus='1'";
+                    ResultSet rs1 = obj.selectCommand(ins1);
+
+                    if (rs1.next()) {
+                        msg = "Record Saved...";
+                        session.setAttribute("id", rs1.getString("tech_id"));
+                        response.sendRedirect("../Servicetech/HomePage.jsp");
+                    } else {
+
+                        String ins2 = "select * from tbl_mangreg where mang_uname='" + uname + "' and mang_pswrd='" + pswrd + "'  and mang_regstatus='1'";
+                        ResultSet rs2 = obj.selectCommand(ins2);
+
+                        if (rs2.next()) {
+                            msg = "Record Saved...";
+                            session.setAttribute("id", rs2.getString("mang_id"));
+                            response.sendRedirect("../Servicemanager/HomePage.jsp");
+                        } else {
+
+                            String ins3 = "select * from tbl_agentreg where agent_uname='" + uname + "' and agent_pswrd='" + pswrd + "' and agent_regstatus='1'";
+                            ResultSet rs3 = obj.selectCommand(ins3);
+
+                            if (rs3.next()) {
+                                msg = "Record Saved...";
+                                session.setAttribute("id", rs3.getString("agent_id"));
+                                response.sendRedirect("../Agent/HomePage.jsp");
+                            } else {
+
+                                String sel = "select * from tbl_admin where auname='" + uname + "' and apswrd='" + pswrd + "'";
+                                ResultSet rsad = obj.selectCommand(sel);
+
+                                if (rsad.next()) {
+                                    msg = "Record Saved...";
+                                    session.setAttribute("id", rsad.getString("login_id"));
+                                    response.sendRedirect("../Admin/HomePage.jsp");
+                                } else {
+
+                                    msg = "";
+                                    out.println("Invalid Username or password");
+                                }
+
+                            }
+
+                        }
+                    }
+                }
+            }
+
+
+        %>
+
+
+
+
+        <form name="frmlogin" action="Login.jsp" method="POST">
+            <center><table border="1">
+
+                    <tbody>
+                        <tr>
+                            <td colspan="2" align="center"><b>LOGIN HERE...</b></td>
+
+                        </tr>
+                        <tr>
+                            <td><b>USERNAME</b></td>
+                            <td><input type="text" name="txtUname" value="" requried="requried"/> </td>
+                        </tr>
+                        <tr>
+                            <td><b>PASSWORD</b></td>
+                            <td><input type="password" name="txtPswrd" value="" requried="requried"/> </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2" align="center">
+                                <input type="submit" name="btnSubmit" value="Submit"  />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center">
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+
+        </form>
+
+
+
+    </body>
+</html>
