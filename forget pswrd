@@ -1,0 +1,31 @@
+<%-- 
+    Document   : Forgetpassword
+    Created on : 17 Apr, 2019, 3:02:41 PM
+    Author     : User
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>ForgetPassword</title>
+    </head>
+    <body>
+        <h1>Forget Password</h1>
+        <form>
+            <center>
+           USERNAME: <input type="text" name="txtfpswrd" value=""/>
+            <br>
+            <br>
+             <tr>
+                            <td colspan="2" align="center">
+                                <input type="submit" name="btnSubmit"/>
+                            
+                            </td>
+                        </tr>
+            </center>
+        </form>
+       
+    </body>
+</html>
